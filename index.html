@@ -1,0 +1,134 @@
+<!DOCTYPE HTML> 
+<html>
+	<head>
+	<script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+	<script src="js/id3-minimized.js" type="text/javascript"></script>
+	
+		<title>
+			Плеер	
+		</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<style>
+			#drop_zone{
+				width:100px;
+				height:100px;
+				float:left;
+			}
+			.eq-wrap{
+				display:block;
+			}
+			input[type="range"] {
+  transform: rotate(-90deg);
+  position: relative;
+  display: inline-block;
+  width: 100px;
+  margin: 70px -70px 0 0;
+}
+canvas{
+	display:block;
+}
+#mainframe{
+    width: 500px;
+    min-height: 170px;
+    background-color: #CCCCCC;
+    border: 3px solid black;
+    position: relative;
+}
+#buttons{
+position: absolute;
+    bottom: 0px;
+}
+.equalizsett{
+display:block;
+width:32px;
+height:32px;
+cursor:pointer;
+background: url('/newplayer/shh.png');
+}
+.bgmod{
+	z-index:1;
+	background-color: rgba(69, 69, 69, 0.44);
+	position:absolute;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+	display:none;
+}
+.modal {
+    display: none;
+    position: absolute;
+    z-index: 2;
+    width: 75%;
+    height: 150%;
+    background: #FFFFFF;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid black;
+	}
+		</style>
+		
+	</head>
+	<body onload="init()">
+	<div id="mainframe">
+	<div id="drop_zone">Drop files here</div>
+	<output id="list"></output>
+	<canvas height='100' width='300' id='example'>Обновите браузер</canvas>
+	<div id="song" style="display:none">
+	
+	<p id="title"></p>
+	
+	<p id="album"></p>
+	</div>
+	<div id="buttons">
+	<table>
+	<tr>
+	<td><p id="ssong"></p></td>
+	<td><p id="artist"></p></td>
+	<td></td>
+	</tr>
+	<tr>
+	<td>
+	<input  type="file" name="files[]" id="files" onchange="reader.readAsDataURL(this.files[0]);getmetadata(this.files[0]);" />
+	</td>
+	<td>
+	<input id="plbtn" type="button" onclick="toggleSound(this)" value="Play">
+	</td>
+	<td>
+	<span class="equalizsett"></span>
+	</td>
+	</tr>
+	</table>
+	</div>
+	<div class="modal">
+	<input type="button" onclick="preset('pop')" value="Pop">
+	<input type="button" onclick="preset('rock')" value="Rock">
+	<input type="button" onclick="preset('jazz')" value="Jazz">
+	<input type="button" onclick="preset('classic')" value="Classic">
+	<input type="button" onclick="preset('normal')" value="Normal">
+	<div class="eq-wrap"></div>
+	</div>
+	<div class="bgmod"></div>
+	
+	
+	
+	</div>
+	
+	<script src="js/player.js"></script>
+	<script>
+		jQuery("span.equalizsett").on("click",function(pos){
+	//console.log($(this).attr("id"));
+
+	//if ($(".modal").css("display")!="none")
+	//{	
+		jQuery(".modal").css({"top":pos.pageY,"left":pos.pageX});
+		jQuery(".modal").hide();
+		jQuery(".bgmod").show();
+		jQuery(".modal, .bgmod").show("slow");
+		});
+		jQuery(".bgmod").live("click",function(){
+	jQuery(".modal, .bgmod").hide();
+});
+	</script>
+	</body>
+</html>
